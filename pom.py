@@ -25,11 +25,12 @@ class VerifySeller:
         accept_button.click()
         return None
 
-    # Then the search location contains 'London' || $$("input[id = 'search-input-location-wrapper']")
+    # Then the search location contains 'London' || $$("input[id = 'search-input-location']")
     def location_text(self, text):
-        inpt_txt = self.driver.find_element_by_id('search-input-location-wrapper')
-        element_txt = inpt_txt.get_attribute('value')
-        return element_txt
+        inpt_txt = self.driver.find_element_by_id('search-input-location')
+        inpt_txt.clear()
+        inpt_txt.send_keys(text)
+        return None
 
     # And the search button is clicked || $$("button[id = 'search-submit']")
     # TODO
@@ -65,6 +66,9 @@ class VerifySeller:
     def properties_belong_list(self):
         pass
 
+    def tear_down(self):
+        browser.quit()
+
 
 # ============================
 # Test
@@ -75,4 +79,5 @@ browser = webdriver.Chrome()
 testing_page = VerifySeller(driver=browser)
 testing_page.go()
 testing_page.accept_cookies()
-# browser.quit()
+testing_page.location_text('London')
+testing_page.tear_down()
