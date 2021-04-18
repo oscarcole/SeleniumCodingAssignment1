@@ -15,9 +15,7 @@ class VerifySeller:
     def go(self):
         self.driver.get(self.url)
 
-    # Alert present requesting cookie preferences || target element in list >
-    # ui-button-primary ui-cookie-accept-all-medium-large || div name for list >
-    # $$("div[class = 'ui-cookie-consent-choose__buttons']")
+    # Alert present requesting cookie preferences
     def accept_cookies(self):
         accept_button = self.driver.find_element_by_css_selector('button.'
                                                                  'ui-button-primary.'
@@ -25,15 +23,14 @@ class VerifySeller:
         accept_button.click()
         return None
 
-    # Then the search location contains 'London' || $$("input[id = 'search-input-location']")
+    # Then the search location contains 'London'
     def location_text(self, text):
         inpt_txt = self.driver.find_element_by_id('search-input-location')
         inpt_txt.clear()
         inpt_txt.send_keys(text)
         return None
 
-    # And the search button is clicked || $$("button[id = 'search-submit']")
-    # TODO
+    # And the search button is clicked
     def click_search(self):
         search_button = self.driver.find_element_by_id('search-submit')
         search_button.click()
@@ -66,6 +63,7 @@ class VerifySeller:
     def properties_belong_list(self):
         pass
 
+    # Browser teardown
     def tear_down(self):
         browser.quit()
 
@@ -80,4 +78,5 @@ testing_page = VerifySeller(driver=browser)
 testing_page.go()
 testing_page.accept_cookies()
 testing_page.location_text('London')
+testing_page.click_search()
 testing_page.tear_down()
