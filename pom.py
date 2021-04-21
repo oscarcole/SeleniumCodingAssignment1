@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-
 # This is a test for verifying that properties listed belong to the agent selected on Zoopla.co.uk
 browser = webdriver.Chrome()
 
@@ -25,21 +24,25 @@ class VerifySeller:
 
     # Then the search location contains 'London'
     def location_text(self, text):
-        inpt_txt = self.driver.find_element_by_id('search-input-location')
+        inpt_txt = self.driver.find_element_by_xpath("//input[@id='header-location']")
         inpt_txt.clear()
         inpt_txt.send_keys(text)
         return None
 
     # And the search button is clicked
     def click_search(self):
-        search_button = self.driver.find_element_by_id('search-submit')
+        # search_button = self.driver.find_element_by_id('search-submit')
+        search_button = self.driver.find_element_by_xpath("//button[@data-testid='search-button']")
         search_button.click()
         return None
 
-    # Then the price values are printed in descending order in the console
+    # Then the price values are printed in descending order in the console || div containing all listings:
+    # css-kdnpqc-ListingsContainer earci3d2
+    # individual entry: earci3d1 css-tk5q7b-Wrapper-ListingCard-StyledListingCard e2uk8e10
     # TODO
     def price_values(self):
-        pass
+        price_group = self.driver.find_element_by_class('css-kdnpqc-ListingsContainer earci3d2')
+        print(price_group)
 
     # And the 5th property on that list is selected (properties constantly updated, might not be the same)
     # TODO
@@ -74,6 +77,7 @@ class VerifySeller:
 
 
 browser = webdriver.Chrome()
+browser.maximize_window()
 testing_page = VerifySeller(driver=browser)
 testing_page.go()
 testing_page.accept_cookies()
