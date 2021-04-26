@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+import time
 # This is a test for verifying that properties listed belong to the agent selected on Zoopla.co.uk
 browser = webdriver.Chrome()
 
@@ -37,12 +37,13 @@ class VerifySeller:
         return None
 
     # Then the price values are printed in descending order in the console || div containing all listings:
-    # css-kdnpqc-ListingsContainer earci3d2
-    # individual entry: earci3d1 css-tk5q7b-Wrapper-ListingCard-StyledListingCard e2uk8e10
-    # TODO
+    # TODO Need to see if css selector available, break down and gather only the elements needed
     def price_values(self):
-        price_group = self.driver.find_element_by_class('css-kdnpqc-ListingsContainer earci3d2')
-        print(price_group)
+        list_of_listings = []
+        price_group = self.driver.find_elements_by_xpath("//div[starts-with(@data-testid, 'search-result_listing_')]")
+        for listing in price_group:
+            list_of_listings.append(listing.get_attribute('innerHTML'))
+        print(list_of_listings)
 
     # And the 5th property on that list is selected (properties constantly updated, might not be the same)
     # TODO
@@ -83,4 +84,5 @@ testing_page.go()
 testing_page.accept_cookies()
 testing_page.location_text('London')
 testing_page.click_search()
+testing_page.price_values()
 testing_page.tear_down()
