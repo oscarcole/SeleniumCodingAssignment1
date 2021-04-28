@@ -16,23 +16,21 @@ class VerifySeller:
 
     # Alert present requesting cookie preferences
     def accept_cookies(self):
-        accept_button = self.driver.find_element_by_css_selector('button.'
-                                                                 'ui-button-primary.'
-                                                                 'ui-cookie-accept-all-medium-large')
+        accept_button = self.driver.find_element_by_css_selector('button[class="ui-button-primary '
+                                                                 'ui-cookie-accept-all-medium-large"]')
         accept_button.click()
         return None
 
     # Then the search location contains 'London'
     def location_text(self, text):
-        inpt_txt = self.driver.find_element_by_xpath("//input[@id='header-location']")
+        inpt_txt = self.driver.find_element_by_css_selector('input[id="header-location"]')
         inpt_txt.clear()
         inpt_txt.send_keys(text)
         return None
 
     # And the search button is clicked
     def click_search(self):
-        # search_button = self.driver.find_element_by_id('search-submit')
-        search_button = self.driver.find_element_by_xpath("//button[@data-testid='search-button']")
+        search_button = self.driver.find_element_by_css_selector('button[data-testid="search-button"]')
         search_button.click()
         return None
 
