@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
 import time
 # This is a test for verifying that properties listed belong to the agent selected on Zoopla.co.uk
 browser = webdriver.Chrome()
@@ -34,11 +35,16 @@ class VerifySeller:
         search_button.click()
         return None
 
-    # Then the price values are printed in descending order in the console || div containing all listings:
-    # TODO Need to see if css selector available, break down and gather only the elements needed
+    # Then the dropdown button is selected making choice
+    def drop_down_sorting(self, sort): # 'select[id="sort-order-dropdown"]'
+        lowest_price_first_dropdown = Select(self.driver.find_element_by_css_selector
+                                             ('select[id="sort-order-dropdown"]'))
+        lowest_price_first_dropdown.select_by_value(sort)
+
+        # Then the price values are printed in descending order in the console
     def price_values(self):
         list_of_listings = []
-        price_group = self.driver.find_elements_by_xpath("//div[starts-with(@data-testid, 'search-result_listing_')]")
+        price_group = self.driver.find_elements_by_css_selector('p[class="css-6v9gpl-Text eczcs4p0"]')
         for listing in price_group:
             list_of_listings.append(listing.get_attribute('innerHTML'))
         print(list_of_listings)
@@ -82,5 +88,7 @@ testing_page.go()
 testing_page.accept_cookies()
 testing_page.location_text('London')
 testing_page.click_search()
+testing_page.drop_down_sorting('lowest_price')
+time.sleep(3) # don't worry, this pesky time.sleep() wont go to final
 testing_page.price_values()
 testing_page.tear_down()
