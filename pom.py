@@ -1,7 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
+
 # This is a test for verifying that properties listed belong to the agent selected on Zoopla.co.uk
 browser = webdriver.Chrome()
 
@@ -36,7 +39,7 @@ class VerifySeller:
         return None
 
     # Then the dropdown button is selected making choice
-    def drop_down_sorting(self, sort): # 'select[id="sort-order-dropdown"]'
+    def drop_down_sorting(self, sort):
         lowest_price_first_dropdown = Select(self.driver.find_element_by_css_selector
                                              ('select[id="sort-order-dropdown"]'))
         lowest_price_first_dropdown.select_by_value(sort)
@@ -47,24 +50,23 @@ class VerifySeller:
         price_group = self.driver.find_elements_by_css_selector('p[class="css-6v9gpl-Text eczcs4p0"]')
         for listing in price_group:
             list_of_listings.append(listing.get_attribute('innerHTML'))
-        print(list_of_listings)
+        print(f'List of prices, low to high: '
+              f'{list_of_listings}')
 
     # And the 5th property on that list is selected (properties constantly updated, might not be the same)
-    # TODO
     def select_fifth(self):
         # Then the 5th property on that list is clicked
-        # TODO
-        pass
+        fifth_listing = self.driver.find_element_by_xpath("//div[starts-with(@id,'listing_')][4]")
+        fifth_listing.click()
 
     # Then the agent name is stored
-    # TODO
-
     def agent_info(self):
-        agent_name = ''
-
+        agent_name = self.driver.find_element_by_xpath("//h3[@class='css-e13akx-Heading3-AgentHeading e11937k16']")
+        agent_name_text = agent_name.text
+        print(f'Agent name is: '
+              f'{agent_name_text}')
         # Then the 'View agent properties' button is clicked
         # TODO
-        pass
 
     # Then assert that all properties on that page belong to the agent selected
     # TODO
@@ -91,4 +93,6 @@ testing_page.click_search()
 testing_page.drop_down_sorting('lowest_price')
 time.sleep(3) # don't worry, this pesky time.sleep() wont go to final
 testing_page.price_values()
+testing_page.select_fifth()
+testing_page.agent_info()
 testing_page.tear_down()
