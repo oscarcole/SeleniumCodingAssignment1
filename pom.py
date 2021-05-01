@@ -62,16 +62,22 @@ class VerifySeller:
     # Then the agent name is stored
     def agent_info(self):
         agent_name = self.driver.find_element_by_xpath("//h3[@class='css-e13akx-Heading3-AgentHeading e11937k16']")
-        agent_name_text = agent_name.text
+        agent_name_text = agent_name.text.strip('View agent properties')
         print(f'Agent name is: '
               f'{agent_name_text}')
-        # Then the 'View agent properties' button is clicked
-        # TODO
+        return agent_name_text
+
+    # Then the 'View agent properties' button is clicked
+    def agent_info_button(self):
+        info_button = self.driver.find_element_by_css_selector("a[data-testid='agent-properties-link']")
+        info_button.click()
 
     # Then assert that all properties on that page belong to the agent selected
-    # TODO
     def properties_belong_list(self):
-        pass
+        client_details = self.driver.find_element_by_xpath("//a[starts-with(@href,'/find-agents/company/')]")
+        client_details_text = client_details.text
+        print(f'Agent name in properties: {client_details}')
+        return client_details_text
 
     # Browser teardown
     def tear_down(self):
@@ -83,7 +89,6 @@ class VerifySeller:
 # ============================
 
 
-browser = webdriver.Chrome()
 browser.maximize_window()
 testing_page = VerifySeller(driver=browser)
 testing_page.go()
@@ -95,4 +100,7 @@ time.sleep(3) # don't worry, this pesky time.sleep() wont go to final
 testing_page.price_values()
 testing_page.select_fifth()
 testing_page.agent_info()
+testing_page.agent_info_button()
+testing_page.properties_belong_list()
+# assert testing_page.agent_info() == testing_page.properties_belong_list()
 testing_page.tear_down()
