@@ -8,6 +8,9 @@ import time
 # This is a test for verifying that properties listed belong to the agent selected on Zoopla.co.uk
 browser = webdriver.Chrome()
 
+AGENT_INFO_IN_LISTING = ''
+AGENT_INFO_IN_CARD = ''
+
 
 class VerifySeller:
     def __init__(self, driver):
@@ -65,7 +68,7 @@ class VerifySeller:
         agent_name_text = agent_name.text.strip('View agent properties')
         print(f'Agent name is: '
               f'{agent_name_text}')
-        return agent_name_text
+        AGENT_INFO_IN_LISTING = agent_name_text
 
     # Then the 'View agent properties' button is clicked
     def agent_info_button(self):
@@ -77,8 +80,7 @@ class VerifySeller:
         client_details = self.driver.find_element_by_xpath("//a[starts-with(@href,'/find-agents/company/')]")
         client_details_text = client_details.text
         print(f'Agent name in properties: {client_details}')
-        return client_details_text
-
+        AGENT_INFO_IN_CARD = client_details_text
     # Browser teardown
     def tear_down(self):
         browser.quit()
@@ -102,5 +104,7 @@ testing_page.select_fifth()
 testing_page.agent_info()
 testing_page.agent_info_button()
 testing_page.properties_belong_list()
-# assert testing_page.agent_info() == testing_page.properties_belong_list()
+assert AGENT_INFO_IN_LISTING == AGENT_INFO_IN_CARD, "Agent information does not match with" \
+                                                                           "with listing"
+print("========================================Test Passed========================================")
 testing_page.tear_down()
