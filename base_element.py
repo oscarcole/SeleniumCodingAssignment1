@@ -8,11 +8,11 @@ class BaseElement(object):
 
     def __init__(self, driver, value, by):
         self.driver = driver
-        self.locator = value
+        self.value = value
         self.by = by
+        self.locator = (self.by, self.value)
         self.web_element = None
         self.find()
-        self.locator = (self.by, self.value)
 
     def go(self):
         self.driver.get(self.url)

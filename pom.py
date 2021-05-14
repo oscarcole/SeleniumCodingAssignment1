@@ -7,7 +7,7 @@ browser = webdriver.Chrome()
 # Test
 seller_ver_page = SellerVerificationPage(driver=browser)
 seller_ver_page.go()
-seller_ver_page.accept_cookies().click()
+seller_ver_page.accept_cookies.click()
 
 
 # ===================================================================================
