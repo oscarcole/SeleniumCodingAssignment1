@@ -14,6 +14,7 @@ class BaseElement(object):
         self.web_element = None
         self.find()
 
+
     def go(self):
         self.driver.get(self.url)
 

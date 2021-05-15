@@ -4,16 +4,13 @@ from base_element import BaseElement
 
 
 class SellerVerificationPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.url = 'https://www.zoopla.co.uk/'
 
-    def go(self):
-        self.driver.get(self.url)
+    url = 'https://www.zoopla.co.uk/'
 
-    # TODO: need to refactor pom.py into seller_verificaiton_page
     @property
     def accept_cookies(self):
         locator = (By.CSS_SELECTOR, 'button[class="ui-button-primary ui-cookie-accept-all-medium-large"]')
         return BaseElement(driver=self.driver, by=locator[0], value=locator[1]
         )
+
+    # TODO: need to refactor pom.py into seller_verificaiton_page
