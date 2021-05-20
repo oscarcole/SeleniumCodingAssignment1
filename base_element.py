@@ -1,6 +1,6 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.support.ui import Select
 
 class BaseElement(object):
 
@@ -13,7 +13,6 @@ class BaseElement(object):
         self.locator = (self.by, self.value)
         self.web_element = None
         self.find()
-
 
     def go(self):
         self.driver.get(self.url)
@@ -32,3 +31,11 @@ class BaseElement(object):
         text = self.web_element.text
         return text
 
+    def input_text(self, txt):
+        self.web_element.send_keys(txt)
+        return None
+
+    def dropdown_value_select(self, sort):
+        dropdown_select = Select(self.web_element)
+        dropdown_select.select_by_value(sort)
+        return None
