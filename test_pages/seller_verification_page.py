@@ -2,9 +2,6 @@ from selenium.webdriver.common.by import By
 from base_element import BaseElement
 from base_page import BasePage
 
-AGENT_INFO_IN_LISTING = ''
-AGENT_INFO_IN_CARD = ''
-
 
 class SellerVerificationPage(BasePage):
     url = 'https://www.zoopla.co.uk/'
@@ -37,9 +34,32 @@ class SellerVerificationPage(BasePage):
                            by=locator[0],
                            value=locator[1])
 
+    @property
+    def fifth_listing(self):
+        locator = (By.XPATH, "//div[starts-with(@id,'listing_')][4]")
+        return BaseElement(driver=self.driver,
+                           by=locator[0],
+                           value=locator[1])
+    @property
+    def listing_agent_name(self):
+        locator = (By.XPATH, "//h3[@class='css-e13akx-Heading3-AgentHeading e11937k16']")
+        return BaseElement(driver=self.driver,
+                           by=locator[0],
+                           value=locator[1])
 
-    # TODO: Then the price values are printed in descending order in the console
-    # TODO: And the 5th property on that list is selected (properties constantly updated, might not be the same)
-    # TODO: Then the agent name is stored
-    # TODO: Then the 'View agent properties' button is clicked
+    @property
+    def view_agent_props_btn(self):
+        locator = (By.CSS_SELECTOR, "a[data-testid='agent-properties-link']")
+        return BaseElement(driver=self.driver,
+                           by=locator[0],
+                           value=locator[1])
+
+    @property
+    def agent_properties_listing(self):
+        locator = (By.XPATH, "//a[starts-with(@href,'/find-agents/company/')]")
+        return BaseElement(driver=self.driver,
+                           by=locator[0],
+                           value=locator[1])
+
+
     # TODO: Then assert that all properties on that page belong to the agent selected

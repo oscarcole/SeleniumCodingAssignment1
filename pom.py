@@ -14,14 +14,20 @@ seller_ver_page.accept_cookies.click()
 seller_ver_page.location_text.input_text('London')
 # And the search button is clicked
 seller_ver_page.click_search.click()
-# TODO: Then the dropdown button is selected making choice
+# Then the dropdown button is selected making choice
 seller_ver_page.drop_down_sorting.dropdown_value_select('lowest_price')
-# TODO: Then the price values are printed in descending order in the console
-# TODO: And the 5th property on that list is selected (properties constantly updated, might not be the same)
-# TODO: Then the agent name is stored
-# TODO: Then the 'View agent properties' button is clicked
-# TODO: Then assert that all properties on that page belong to the agent selected
-# TODO: Browser teardown
+# And the 5th property on that list is selected (properties constantly updated, might not be the same)
+seller_ver_page.fifth_listing.click()
+# Then the agent name is stored
+AGENT_INFO_IN_LISTING = seller_ver_page.listing_agent_name.text().strip('View agent properties')
+# Then the 'View agent properties' button is clicked
+seller_ver_page.view_agent_props_btn.click()
+# Then the agent name in listing card is stored
+AGENT_INFO_IN_CARD = seller_ver_page.agent_properties_listing.text()
+# Then assert that all properties on that page belong to the agent selected
+assert AGENT_INFO_IN_LISTING == AGENT_INFO_IN_CARD
+# Browser teardown
+browser.quit()
 
 
 
