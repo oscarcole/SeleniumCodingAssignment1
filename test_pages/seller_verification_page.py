@@ -61,5 +61,3 @@ class SellerVerificationPage(BasePage):
                            by=locator[0],
                            value=locator[1])
 
-
-    # TODO: Then assert that all properties on that page belong to the agent selected
