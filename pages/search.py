@@ -1,4 +1,8 @@
 
+"""
+This page contains the page object for Zoopla.co.uk search page
+"""
+
 # GIVEN the URL "https://www.zoopla.co.uk/" is displayed
 URL = 'https://www.zoopla.co.uk/'
 
